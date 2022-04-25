@@ -15,6 +15,12 @@ let interval;
 let sec = 0
 let wordlength;
 let unit = 0
+let ogStr;
+const tracker = {}
+let idx = 0
+let incorrect = 0
+const spans = document.getElementsByClassName('char')
+
 startBtn.addEventListener('click', startTimer)
 
 nextBtn.addEventListener('click', () => {
@@ -25,45 +31,60 @@ nextBtn.addEventListener('click', () => {
   accuracy.innerText = ""
   wpm.innerText = ""
   textarea.disabled = true
+  idx = 0
+  incorrect = 0
   startBtn.addEventListener('click', startTimer)
 })
 
 function startTimer() {
   textarea.disabled = false
   textarea.focus()
-  
+
   interval = setInterval(() => {
     sec++
     timer.innerText = "Time: " + sec.toString() + " secs"
+
+    console.log("scrolled")
+
+
   }, 1000)
   startBtn.removeEventListener('click', startTimer)
 }
+
+
+function pageScroll() {
+  quoteDisplayElement.scrollBy(0,10);
+}
+
 
 function stopTimer() {
   clearInterval(interval)
 }
 
-let ogStr;
+
 
 async function getRandomQuote () {
-  const response = await fetch(url + `/${unit}`)
-  const data = await response.json()
-  // const $ = cheerio.load(data)
-  // console.log($)
-  return data.snippet
+  try {
+    const response = await fetch(url + `/${unit}`)
+    const data = await response.json()
+    return data.snippet
+  } catch (err) {
+    console.error(err)
+  }
+  
 }
 async function renderNewQuote() {
   // const quote = await getRandomQuote()
-  const obj = [
-    {
-      name: "Jane Doe",
-      favoriteGame: "Stardew Valley",
-      subscriber: false
-    }
-  ]
+  // const obj = [
+  //   {
+  //     name: "Jane Doe",
+  //     favoriteGame: "Stardew Valley",
+  //     subscriber: false
+  //   }
+  // ]
   // const quote = JSON.stringify(obj, null, 2)
   const snippet = await getRandomQuote()
-  quote = snippet
+  const quote = snippet
   ogStr = quote
   s = ogStr
   s = s.replace(/(^\s*)|(\s*$)/gi, "")
@@ -88,10 +109,6 @@ async function renderNewQuote() {
   quoteInputElement.value = null
 }
 
-const tracker = {}
-let idx = 0
-let incorrect = 0
-const spans = document.getElementsByClassName('char')
 
 
 
@@ -121,11 +138,15 @@ textarea.addEventListener('keydown', (e) => {
     e.preventDefault()
     
   }
+
+  if (e.key === "Enter") {
+    pageScroll()
+  }
 })
 
 
 
-quoteInputElement.addEventListener('input', async (evt) => {
+quoteInputElement.addEventListener('input', (evt) => {
   let textValue;
   
 
