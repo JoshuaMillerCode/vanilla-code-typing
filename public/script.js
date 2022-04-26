@@ -1,6 +1,5 @@
 const randomQuoteApi = 'http://api.quotable.io/random'
-
-const url = 'http://localhost:3000/snippets/getCode'
+const url = 'https://vanilla-typer.herokuapp.com/snippets/getCode'
 const quoteDisplayElement = document.getElementById("quoteDisplay")
 const quoteInputElement = document.getElementById('quoteInput')
 const placeholderDiv = document.getElementById("placeholder")
@@ -84,7 +83,12 @@ function setCaretToPos (input, pos) {
 
 async function getRandomQuote () {
   try {
-    const response = await fetch(url + `/${unit}`)
+    const response = await fetch(url + `/${unit}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+      },
+    })
     const data = await response.json()
     return data.snippet
   } catch (err) {
