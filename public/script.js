@@ -16,7 +16,7 @@ let sec = 0
 let wordlength;
 let unit = 0
 let ogStr;
-const tracker = {}
+let tracker = {}
 let idx = 0
 let incorrect = 0
 const spans = document.getElementsByClassName('char')
@@ -26,6 +26,7 @@ startBtn.addEventListener('click', startTimer)
 nextBtn.addEventListener('click', () => {
   stopTimer()
   renderNewQuote()
+  startBtn.addEventListener('click', startTimer)
   sec = 0
   timer.innerText = sec.toString()
   accuracy.innerText = ""
@@ -33,7 +34,7 @@ nextBtn.addEventListener('click', () => {
   textarea.disabled = true
   idx = 0
   incorrect = 0
-  startBtn.addEventListener('click', startTimer)
+  tracker = {}
 })
 
 function startTimer() {
@@ -168,7 +169,7 @@ quoteInputElement.addEventListener('input', (evt) => {
     tracker[idx] = evt.target.value[idx]
     
   
-  textValue = Object.values(tracker).join("")
+    textValue = Object.values(tracker).join("")
   
 
     if (tracker[idx] === spans[idx].innerText) {
@@ -176,24 +177,17 @@ quoteInputElement.addEventListener('input', (evt) => {
       spans[idx].classList.add('correct')
       
       if (tracker[idx] === ogStr[idx] && textValue === ogStr.slice(0, idx + 1)) {
-        // console.log("correct now")
-        // placeholderDiv.setAttribute('data-placeholder', ogStr)
+        
         placeholderDiv.setAttribute('data-placeholder', ogStr)
       }
     }else {
-      // tracker[idx].status = "I"
       incorrect++
       spans[idx].classList.add('incorrect')
-      // if (textValue !== ogStr.split(0, idx + 1)) {
-      //   placeholderDiv.setAttribute('data-placeholder', "")
-      // }
+     
       
-      if (tracker[idx] === ogStr[idx]) {
-        
-        // placeholderDiv.setAttribute('data-placeholder', ogStr)
-      } else {
+      if (tracker[idx] !== ogStr[idx]) {
         placeholderDiv.setAttribute('data-placeholder', "")
-      }
+      } 
       
     }
     idx++
