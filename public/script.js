@@ -1,4 +1,3 @@
-// const axios = require('axios')
 const randomQuoteApi = 'http://api.quotable.io/random'
 
 const url = 'http://localhost:3000/snippets/getCode'
@@ -19,6 +18,7 @@ let ogStr;
 let tracker = {}
 let idx = 0
 let incorrect = 0
+
 const spans = document.getElementsByClassName('char')
 
 startBtn.addEventListener('click', startTimer)
@@ -60,6 +60,24 @@ function pageScroll() {
 
 function stopTimer() {
   clearInterval(interval)
+}
+
+function setSelectionRange(input, selectionStart, selectionEnd) {
+  if (input.setSelectionRange) {
+    input.focus();
+    input.setSelectionRange(selectionStart, selectionEnd);
+  }
+  else if (input.createTextRange) {
+    const range = input.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', selectionEnd);
+    range.moveStart('character', selectionStart);
+    range.select();
+  }
+}
+
+function setCaretToPos (input, pos) {
+   setSelectionRange(input, pos, pos);
 }
 
 
@@ -127,7 +145,6 @@ textarea.addEventListener('keydown', (e) => {
     tracker[idx] = " "
     tracker[idx + 1] = " "
     idx +=2
-    
   }
 
   if (e.key === "ArrowUp") {
@@ -143,57 +160,71 @@ textarea.addEventListener('keydown', (e) => {
   if (e.key === "Enter") {
     pageScroll()
   }
+
+
 })
 
 
-
+// Event Listener for the input inside the textarea
 quoteInputElement.addEventListener('input', (evt) => {
   let textValue;
-  
-
  
-  
+ 
+  // First check if the user has typed the length of the provided code snippet. (AKA the user has finished typing the snippet)
   if (evt.target.value.length === spans.length) {
-    // alert(`You did it! Accuracy: ${Math.floor(((spans.length - incorrect) / spans.length) * 100)}`)
+    // Calculating the accuracy of the user typing compared the provided code snippet 
     const acc = Math.floor(((spans.length - incorrect) / spans.length) * 100).toString()
+    // Calculating the words per minute based on the amount of words in the snippet compared to the time it took for the user to finish
     const wpmCalc = Math.round((wordlength / sec) * 60)
-    console.log(wpmCalc)
+    // Clear the interval for the timer
     stopTimer()
+    // Disable the textarea
     textarea.disabled = true
+    // Set calculations above to the dom
     wpm.innerText = wpmCalc
     accuracy.innerText = acc
+
+    if (evt.target.value === ogStr){
+      alert('You did it! and you code executed successfully')
+    } else {
+      alert("i mean sure but the code threw an error while execution")
+    }
   }
 
-  
+    // if our idx variable matches the length of users input
     if (idx === evt.target.value.length - 1) {
-    tracker[idx] = evt.target.value[idx]
-    
-  
-    textValue = Object.values(tracker).join("")
-  
-
+      // add the char to the tracker obj as the value and the idx as the key 
+      tracker[idx] = evt.target.value[idx]
+      // join our object values into a string
+      textValue = Object.values(tracker).join("")
+      // check if the tracker's char under the idx value is equal to the provided snippets same idx char
     if (tracker[idx] === spans[idx].innerText) {
-      // tracker[idx].status = "C"
+      // if correct, add the correct class to the span to display the user input is correct
       spans[idx].classList.add('correct')
       
+      // check for a the correct value after an incorrect char is type, if they backspace to try to fix the error it will check everytime to see of the value is correct so it can reset the placeholder
       if (tracker[idx] === ogStr[idx] && textValue === ogStr.slice(0, idx + 1)) {
         
         placeholderDiv.setAttribute('data-placeholder', ogStr)
       }
     }else {
+      // add to the incorrect counter
       incorrect++
+      // set span class to incorrect
       spans[idx].classList.add('incorrect')
      
-      
+      //compare the values, if they are not equal, remove the placeholder 
       if (tracker[idx] !== ogStr[idx]) {
         placeholderDiv.setAttribute('data-placeholder', "")
       } 
       
     }
+    //increament the idx
     idx++
     
   } else {
     
+    //they have backspaced so the tracker and idx need to follow 
     delete tracker[idx]
     idx--
     
@@ -201,7 +232,8 @@ quoteInputElement.addEventListener('input', (evt) => {
     spans[idx].classList.remove('correct')
     spans[idx].classList.remove('incorrect')
   }
-} )
+  console.log(tracker)
+})
 
 
 
