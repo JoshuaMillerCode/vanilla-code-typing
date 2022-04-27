@@ -115,7 +115,8 @@ pre {
 }
 
 .start,
-.next {
+.next,
+.reset {
   position: relative;
   display: inline-block;
   padding: 1.2em 2em;
@@ -128,7 +129,8 @@ pre {
   font-size: 20px;
 }
 
-.start::before {
+.start::before,
+.reset::before {
   content: '';
   position: absolute;
   top: 0;
@@ -161,12 +163,14 @@ pre {
 }
 
 .start:hover::before,
-.next:hover::before {
+.next:hover::before,
+.reset:hover::before {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .start::after,
-.next::after {
+.next::after,
+.reset::after {
   position: relative;
   display: inline-block;
   content: attr(data-title);
