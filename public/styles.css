@@ -88,6 +88,10 @@ pre,
   overflow: auto;
 }
 
+.placeholder::-webkit-scrollbar {
+  display: none;
+}
+
 .placeholder::after {
   position: absolute;
   left: calc(1rem + 2px);
