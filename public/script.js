@@ -19,7 +19,18 @@ let tracker = {}
 let idx = 0
 let incorrect = 0
 
+
+
 const spans = document.getElementsByClassName('char')
+
+textarea.addEventListener('copy', (e) => {
+  e.preventDefault()
+})
+textarea.addEventListener('paste', (e) => {
+  e.preventDefault()
+})
+
+
 
 
 startBtn.addEventListener('click', startTimer)
@@ -174,15 +185,28 @@ quoteInputElement.addEventListener('input', (evt) => {
 
     idx++
   } else {
-  
+    const ogDone = ogStr.slice(0, idx)
+    const difflength = ogDone.length - evt.target.value.length 
+    
     //they have backspaced so the tracker and idx need to follow 
-    delete tracker[idx]
-    idx--
+    if (difflength > 1){
+      for (let i = 0; i < difflength; i++) {
+        delete tracker[idx]
+        idx--
+        spans[idx].classList.remove('correct')
+        spans[idx].classList.remove('incorrect')
+      }
+    } else {
+      delete tracker[idx]
+      idx--
+      spans[idx].classList.remove('correct')
+      spans[idx].classList.remove('incorrect')
+    }
+    
 
-    spans[idx].classList.remove('correct')
-    spans[idx].classList.remove('incorrect')
+    
   }
-  // console.log(tracker)
+
 })
 
 
@@ -214,6 +238,7 @@ textarea.addEventListener('keydown', (e) => {
 
   if (e.key === "Enter") {
     pageScroll()
+
   }
 
   if (e.key === "Backspace") {
@@ -223,10 +248,12 @@ textarea.addEventListener('keydown', (e) => {
     
     if (currentValue.slice(0, currentValue.length - 1) === og) {
       e.preventDefault()
-     
     }
+
+
   }
 })
+
 
 textarea.addEventListener('keyup', (e) => {
   if (e.key === "Backspace") {
