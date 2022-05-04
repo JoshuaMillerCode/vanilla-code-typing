@@ -21,6 +21,7 @@ let incorrect = 0
 
 const spans = document.getElementsByClassName('char')
 
+
 startBtn.addEventListener('click', startTimer)
 
 nextBtn.addEventListener('click', () => {
@@ -214,21 +215,31 @@ textarea.addEventListener('keydown', (e) => {
   if (e.key === "Enter") {
     pageScroll()
   }
+
+  if (e.key === "Backspace") {
+    const currentValue = Object.values(tracker).join("")
+    const og = ogStr.slice(0, idx)
+    
+    
+    if (currentValue.slice(0, currentValue.length - 1) === og) {
+      e.preventDefault()
+     
+    }
+  }
 })
 
 textarea.addEventListener('keyup', (e) => {
   if (e.key === "Backspace") {
     const currentValue = Object.values(tracker).join("")
-   
-    const obj = {
-      currentVal: currentValue.slice(0, currentValue.length - 1),
-      og: ogStr.slice(0, idx)
-    }
+    const og = ogStr.slice(0, idx)
     
-    if (obj.currentVal === obj.og) {
+    
+    if (currentValue.slice(0, currentValue.length - 1) === og) {
       placeholderDiv.setAttribute('data-placeholder', ogStr)
      
     }
+
+    
   }
 })
 
