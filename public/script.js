@@ -18,7 +18,7 @@ let ogStr;
 let tracker = {}
 let idx = 0
 let incorrect = 0
-
+let select;
 
 
 const spans = document.getElementsByClassName('char')
@@ -29,6 +29,9 @@ textarea.addEventListener('copy', (e) => {
 textarea.addEventListener('paste', (e) => {
   e.preventDefault()
 })
+
+
+
 
 
 
@@ -47,6 +50,7 @@ nextBtn.addEventListener('click', () => {
   idx = 0
   incorrect = 0
   tracker = {}
+  gameComplete = false
 })
 
 resetbtn.addEventListener('click', () => {
@@ -62,6 +66,7 @@ resetbtn.addEventListener('click', () => {
   idx = 0
   incorrect = 0
   tracker = {}
+  gameComplete = false
   for (let el of spans){
     el.classList.remove('correct')
     el.classList.remove('incorrect')
@@ -126,13 +131,44 @@ async function renderNewQuote() {
 
 
 
+textarea.addEventListener('click', (e) => {
+  if (idx !== select) {
+   
+  
+    const end = textarea.value.length;
+
+    textarea.setSelectionRange(end, end);
+    textarea.focus();
+  }
+})
 
 
+textarea.addEventListener('mousedown', (e) => {
+  if (idx !== select) {
+   
+  
+    const end = textarea.value.length;
+
+    textarea.setSelectionRange(end, end);
+    textarea.focus();
+  }
+})
 
 
 // Event Listener for the input inside the textarea
 quoteInputElement.addEventListener('input', (evt) => {
   let textValue;
+  
+  select = evt.target.selectionStart - 1
+
+  if (idx !== select) {
+   
+  
+    const end = textarea.value.length;
+
+    textarea.setSelectionRange(end, end);
+    textarea.focus();
+  }
 
     // if our idx variable matches the length of users input
     if (idx === evt.target.value.length - 1) {
@@ -175,6 +211,7 @@ quoteInputElement.addEventListener('input', (evt) => {
       // Set calculations above to the dom
       wpm.innerText = wpmCalc
       accuracy.innerText = acc
+      gameComplete = true
   
       if (evt.target.value === ogStr){
         alert('You did it! and you code executed successfully')
@@ -189,28 +226,35 @@ quoteInputElement.addEventListener('input', (evt) => {
     const difflength = ogDone.length - evt.target.value.length 
     
     //they have backspaced so the tracker and idx need to follow 
-    if (difflength > 1){
+    
       for (let i = 0; i < difflength; i++) {
-        delete tracker[idx]
         idx--
+        delete tracker[idx]
         spans[idx].classList.remove('correct')
         spans[idx].classList.remove('incorrect')
       }
-    } else {
-      delete tracker[idx]
-      idx--
-      spans[idx].classList.remove('correct')
-      spans[idx].classList.remove('incorrect')
-    }
+    
+    // else {
+    //   delete tracker[idx]
+    //   idx--
+    //   spans[idx].classList.remove('correct')
+    //   spans[idx].classList.remove('incorrect')
+    // }
     
 
-    
+
   }
+})
 
+textarea.addEventListener('click', (e) => {
+  e.stopPropagation()
 })
 
 
+
 textarea.addEventListener('keydown', (e) => {
+
+
   if (e.key === 'Tab') {
     e.preventDefault()
 
@@ -230,26 +274,22 @@ textarea.addEventListener('keydown', (e) => {
     e.preventDefault()
     
   }
+  
+  if (e.ctrlKey) {
+    e.preventDefault()
+  }
+
+  if (e.metaKey) {
+    e.preventDefault()
+  }
 
   if (e.key === "ArrowDown") {
     e.preventDefault()
-    
+  
   }
 
   if (e.key === "Enter") {
     pageScroll()
-
-  }
-
-  if (e.key === "Backspace") {
-    const currentValue = Object.values(tracker).join("")
-    const og = ogStr.slice(0, idx)
-    
-    
-    if (currentValue.slice(0, currentValue.length - 1) === og) {
-      e.preventDefault()
-    }
-
 
   }
 })
