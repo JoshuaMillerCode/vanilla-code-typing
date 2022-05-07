@@ -153,6 +153,16 @@ textarea.addEventListener('mousedown', (e) => {
     textarea.focus();
   }
 })
+document.addEventListener('mouseup', (e) => {
+  if (idx !== select) {
+   
+  
+    const end = textarea.value.length;
+
+    textarea.setSelectionRange(end, end);
+    textarea.focus();
+  }
+})
 
 
 // Event Listener for the input inside the textarea
@@ -246,9 +256,9 @@ quoteInputElement.addEventListener('input', (evt) => {
   }
 })
 
-textarea.addEventListener('click', (e) => {
-  e.stopPropagation()
-})
+// textarea.addEventListener('click', (e) => {
+//   e.stopPropagation()
+// })
 
 
 
@@ -298,12 +308,11 @@ textarea.addEventListener('keydown', (e) => {
 textarea.addEventListener('keyup', (e) => {
   if (e.key === "Backspace") {
     const currentValue = Object.values(tracker).join("")
+    const val = currentValue.slice(0, currentValue.length)
     const og = ogStr.slice(0, idx)
     
-    
-    if (currentValue.slice(0, currentValue.length - 1) === og) {
+    if ( val === og) {
       placeholderDiv.setAttribute('data-placeholder', ogStr)
-     
     }
 
     
