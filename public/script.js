@@ -298,6 +298,16 @@ textarea.addEventListener('keydown', (e) => {
   
   }
 
+  if (e.key === "ArrowLeft") {
+    e.preventDefault()
+  
+  }
+
+  if (e.key === "ArrowRight") {
+    e.preventDefault()
+  
+  }
+
   if (e.key === "Enter") {
     pageScroll()
 
