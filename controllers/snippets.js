@@ -1,21 +1,31 @@
 const { Router } = require('express');
 const data = require('../seed');
 const router = Router();
+const Snippet = require('../models/Snippet.js');
 
 router.get('/get-code/:type', async (req, res) => {
-  const randomAll = data[Math.floor(Math.random() * data.length)];
+  if (req.params.type === 'all') {
+    const randomAll = await Snippet.findRandom();
 
-  if (req.params.type === '0') {
     res.send(randomAll);
     return;
   }
 
-  const found = data.filter((x) => {
-    return x.type === parseInt(req.params.unit);
-  });
-  const random = found[Math.floor(Math.random() * found.length)];
+  const random = await Snippet.findRandomByType(req.params.type);
 
   res.send(random);
+});
+
+router.post('/seed', async (req, res) => {
+  try {
+    await Snippet.deleteMany({});
+
+    const created = await Snippet.create(data);
+
+    res.json(created);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
 module.exports = router;
