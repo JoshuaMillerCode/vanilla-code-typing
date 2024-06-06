@@ -5,6 +5,9 @@ const cors = require('cors');
 const snippetRouter = require('./controllers/snippets');
 const PORT = process.env.PORT || 3000;
 
+//Connect to Database
+require('./db/conn.js');
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));

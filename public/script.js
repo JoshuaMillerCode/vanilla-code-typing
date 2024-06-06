@@ -51,7 +51,7 @@ resetbtn.addEventListener('click', () => {
   // renderNewQuote()
   startBtn.addEventListener('click', startTimer);
   sec = 0;
-  timer.innerText = sec.toString();
+  timer.innerText = 'Time: ' + sec.toString() + ' secs';
   accuracy.innerText = '';
   wpm.innerText = '';
   textarea.value = '';

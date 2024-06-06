@@ -10,13 +10,13 @@
     <title>Vanilla JS Speed Typing</title>
   </head>
   <body>
-    <div class="timer" id="timer">Time 0 secs</div>
     <div class="info-container">
       <div>
         <button class="start btn">Start</button>
         <button class="next btn">Next</button>
         <button class="reset btn">Reset</button>
       </div>
+      <div class="timer" id="timer">Time: 0 secs</div>
       <div class="nums">
         <div>
           <h2>WPM: <span class="WPM"></span></h2>
@@ -27,14 +27,14 @@
       </div>
     </div>
     <div class="container">
-      <pre class="quote-display" id="quoteDisplay">quote</pre>
+      <pre class="quote-display" id="quoteDisplay"></pre>
       <pre
         class="placeholder"
         spellcheck="false"
         id="placeholder"
         data-placeholder="hey"
       >
-<textarea  disabled id="quoteInput" cols="30" rows="10" class="quote-input"></textarea>
+<textarea  disabled id="quoteInput" cols="30" rows="90" class="quote-input"></textarea>
     </pre>
     </div>
   </body>
