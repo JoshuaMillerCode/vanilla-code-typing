@@ -394,7 +394,7 @@ const snippets = [
       'This code defines a `MyForm` component using the `react-hook-form` library. It registers input fields and handles form submission, displaying an error message for required fields.',
   },
   {
-    snippet: `const mongoose = require('mongoose');\n\nmongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true });\n\nconst db = mongoose.connection;\ndb.on('error', console.error.bind(console, 'connection error:'));\ndb.once('open', function() {\n  console.log('Connected to MongoDB');\n});`,
+    snippet: `const mongoose = require('mongoose');\n\nmongoose.connect('mongodb://localhost/test');\n\nconst db = mongoose.connection;\ndb.on('error', console.error.bind(console, 'connection error:'));\ndb.once('open', function() {\n  console.log('Connected to MongoDB');\n});`,
     type: 'mongoose',
     description:
       'This code connects to a MongoDB database using Mongoose and sets up event listeners to handle connection errors and successful connection.',
