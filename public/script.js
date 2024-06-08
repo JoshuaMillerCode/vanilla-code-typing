@@ -11,6 +11,7 @@ const timer = document.getElementById('timer');
 const wpm = document.querySelector('.WPM');
 const accuracy = document.querySelector('.acc');
 const description = document.getElementById('description');
+const desContent = document.getElementById('des-content');
 const codeBtn = document.getElementById('icon');
 let interval;
 let sec = 0;
@@ -48,6 +49,7 @@ nextBtn.addEventListener('click', () => {
   incorrect = 0;
   tracker = {};
   gameComplete = false;
+  desContent.textContent = snippetState.description;
 });
 
 resetbtn.addEventListener('click', () => {
@@ -100,7 +102,6 @@ async function getRandomQuote() {
     });
     const data = await response.json();
     snippetState = data;
-    console.log(snippetState);
     return data.snippet;
   } catch (err) {
     console.error(err);
@@ -108,6 +109,7 @@ async function getRandomQuote() {
 }
 async function renderNewQuote() {
   const snippet = await getRandomQuote();
+  desContent.textContent = snippetState.description;
   const quote = snippet;
   ogStr = quote;
   s = ogStr;
@@ -304,7 +306,12 @@ textarea.addEventListener('keyup', (e) => {
 });
 
 codeBtn.addEventListener('click', () => {
-  description.style.display = 'block';
+  const display = description.style.display;
+  if (display === 'block') {
+    description.style.display = 'none';
+  } else {
+    description.style.display = 'block';
+  }
 });
 
 renderNewQuote();
