@@ -210,12 +210,13 @@ quoteInputElement.addEventListener('input', (evt) => {
       // Disable the textarea
       textarea.disabled = true;
       // Set calculations above to the dom
-      wpm.innerText = wpmCalc;
+      // wpm.innerText = wpmCalc;
+      wpm.textContent = 'N/A';
       accuracy.innerText = acc;
       gameComplete = true;
 
       if (evt.target.value === ogStr) {
-        alert('You did it! and you code executed successfully');
+        alert('You did it! And your code executed successfully');
       } else {
         alert('i mean sure but the code threw an error while execution');
       }
