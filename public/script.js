@@ -4,21 +4,25 @@ const quoteDisplayElement = document.getElementById('quoteDisplay');
 const quoteInputElement = document.getElementById('quoteInput');
 const placeholderDiv = document.getElementById('placeholder');
 const textarea = document.querySelector('textarea');
-const startBtn = document.querySelector('.start');
-const nextBtn = document.querySelector('.next');
-const resetbtn = document.querySelector('.reset');
+const startBtn = document.querySelector('#start');
+const nextBtn = document.querySelector('#next');
+const resetbtn = document.querySelector('#reset');
 const timer = document.getElementById('timer');
 const wpm = document.querySelector('.WPM');
 const accuracy = document.querySelector('.acc');
+const description = document.getElementById('description');
+const codeBtn = document.getElementById('icon');
 let interval;
 let sec = 0;
 let wordlength;
-let unit = 0;
+let type = 'all';
 let ogStr;
 let tracker = {};
 let idx = 0;
 let incorrect = 0;
 let select;
+
+let snippetState;
 
 const spans = document.getElementsByClassName('char');
 
@@ -51,7 +55,7 @@ resetbtn.addEventListener('click', () => {
   // renderNewQuote()
   startBtn.addEventListener('click', startTimer);
   sec = 0;
-  timer.innerText = 'Time: ' + sec.toString() + ' secs';
+  timer.innerText = '00:' + sec.toString();
   accuracy.innerText = '';
   wpm.innerText = '';
   textarea.value = '';
@@ -72,7 +76,8 @@ function startTimer() {
 
   interval = setInterval(() => {
     sec++;
-    timer.innerText = 'Time: ' + sec.toString() + ' secs';
+    timer.innerText =
+      '00:' + (sec < 10 ? `0${sec.toString()}` : sec.toString());
   }, 1000);
   startBtn.removeEventListener('click', startTimer);
 }
@@ -87,13 +92,15 @@ function stopTimer() {
 
 async function getRandomQuote() {
   try {
-    const response = await fetch(url + `/${unit}`, {
+    const response = await fetch(url + `/${type}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
     });
     const data = await response.json();
+    snippetState = data;
+    console.log(snippetState);
     return data.snippet;
   } catch (err) {
     console.error(err);
@@ -294,6 +301,10 @@ textarea.addEventListener('keyup', (e) => {
       placeholderDiv.setAttribute('data-placeholder', ogStr);
     }
   }
+});
+
+codeBtn.addEventListener('click', () => {
+  description.style.display = 'block';
 });
 
 renderNewQuote();

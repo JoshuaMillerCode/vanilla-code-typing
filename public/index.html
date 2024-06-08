@@ -6,17 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
 
+    <!-- Font Awesome Connect -->
+    <script
+      src="https://kit.fontawesome.com/a38f17e504.js"
+      crossorigin="anonymous"
+    ></script>
+
     <script src="./script.js" defer></script>
     <title>Vanilla JS Speed Typing</title>
   </head>
   <body>
     <div class="info-container">
       <div>
-        <button class="start btn">Start</button>
-        <button class="next btn">Next</button>
-        <button class="reset btn">Reset</button>
+        <button id="start" class="btn">Start</button>
+        <button id="next" class="btn">Next</button>
+        <button id="reset" class="btn">Reset</button>
       </div>
-      <div class="timer" id="timer">Time: 0 secs</div>
+      <div class="timer" id="timer">
+        <!-- <span>Time:</span>  -->
+
+        0
+      </div>
+      <!-- <div class="nums-wrap"> -->
       <div class="nums">
         <div>
           <h2>WPM: <span class="WPM"></span></h2>
@@ -26,16 +37,30 @@
         </div>
       </div>
     </div>
+    <!-- </div> -->
     <div class="container">
+      <!-- <button class="btn btn--stripe"> -->
+      <i id="icon" class="fa-solid fa-code fa-2x"></i>
+      <!-- </button> -->
       <pre class="quote-display" id="quoteDisplay"></pre>
       <pre
         class="placeholder"
         spellcheck="false"
         id="placeholder"
-        data-placeholder="hey"
+        data-placeholder=""
       >
-<textarea  disabled id="quoteInput" cols="30" rows="90" class="quote-input"></textarea>
-    </pre>
+        <textarea  disabled id="quoteInput" cols="30" rows="30" class="quote-input"></textarea>
+      </pre>
+      <div id="description">
+        <!-- <textarea  disabled id="quoteInput" cols="30" rows="90" class="quote-input"></textarea> -->
+      </div>
     </div>
+    <!-- <div id="overlay">
+      <img
+        src="http://upload.wikimedia.org/wikipedia/commons/a/aa/Polarlicht_2.jpg"
+      />
+      Welcome to Vanilla Typer
+      <br />
+    </div> -->
   </body>
 </html>

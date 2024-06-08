@@ -10,29 +10,49 @@ body {
   height: 100%;
   margin: 0;
   background-color: lavender;
+  font-family: 'Courier New', Courier, monospace;
 }
-
+/* 
 body,
 pre,
 .quote-input {
   font-family: monospace;
-}
+} */
 
 .container {
   background-color: #f2ed98;
   padding: 1rem;
-  border-radius: 0.5rem;
-  width: 90vw;
-  height: 80vh;
-  max-width: 90%;
-  display:flex
-  
+  border-radius: 0.6rem;
+  width: 95vw;
+  height: 82vh;
+  /* max-width: 90%; */
+  display:flex;
+  position: relative;
 }
+
+
+.container i {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+#icon:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: .2s linear transform;
+  z-index: 10000;
+}
+
+/* icon styling */
+
+
 
 .timer {
   /* position: relative;
   top: 2rem; */
   /* margin-top: 5vh; */
+  font-family: 'Courier New', Courier, monospace;
   font-size: 3rem;
   color: #f2ed98;
   font-weight: bold;
@@ -40,7 +60,7 @@ pre,
 }
 
 .quote-display {
-  font-size: 1rem;
+  font-size: .82rem;
   margin-bottom: 1rem;
   margin-left: calc(1rem + 2px);
   margin-right: calc(1rem + 2px);
@@ -61,17 +81,47 @@ pre,
   border: none;
   width: 100%;
   height: 70vh;
-  margin: auto;
+  /* margin-left: -15px; */
+  /* margin-right: 15%; */
   resize: none;
   padding: 0.45rem 1.05rem;
-  font-size: 1rem;
+  font-size: .82rem;
   border-radius: 0.5rem;
-  position: relative;
-  cursor: not-allowed;
+  position: absolute;
+  cursor: text;
+  left: 0;
+
 }
 
 .quote-input:focus {
-  border: 1px solid black;
+  border: 1px solid #f2ed98;
+  animation-name: blinking;
+  animation-duration: 1.5s;
+  animation-iteration-count: 100;
+}
+@keyframes blinking {
+  50% {
+    border-color: black;
+  }
+}
+
+#description{
+  background-color: grey;
+
+  display: none;
+  width: 50%;
+  height: 70vh;
+  /* margin-left: -15px; */
+  /* margin-right: 15%; */
+  resize: none;
+  padding: 0.45rem 1.05rem;
+  font-size: .82rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  cursor: text;
+  right: 0; 
+  
+
 }
 
 .correct {
@@ -85,7 +135,7 @@ pre,
 
 .placeholder {
   position: relative;
-  font-size: 1rem;
+  font-size: .82rem;
   height: 80vh;
   width: 100%;
   overflow: auto;
@@ -99,7 +149,7 @@ pre,
   position: absolute;
   left: calc(1rem + 2px);
   top: 0.5rem;
-  font-size: 1rem;
+  font-size: .82rem;
   content: attr(data-placeholder);
   pointer-events: none;
   opacity: 0.3;
@@ -117,8 +167,23 @@ pre {
   align-items: center;
 }
 
+/* .nums-wrap {
+  background: linear-gradient(135deg, #a777e3, #6e8efb);
+  border-radius: 20px;
+  padding: 2px;
+  position: relative;
+} */
+
 .nums {
-  margin-right: 5vw;
+  /* margin-right: 5vw; */
+  border: 4px solid;
+  border-image-source: linear-gradient(135deg, #a777e3, #6e8efb);
+  border-image-slice: 1;
+  background: #f2ed98;
+  border-radius: 20px;
+  width: 20vw;
+  padding-left: 15px;
+  font-size: .82rem;
 }
 
 .btn {
@@ -130,12 +195,20 @@ pre {
   color: white;
   font-weight: bold;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-
+  margin: 5px 0;
+  font-size: 1.2rem;
+  font-family: 'Courier New', Courier, monospace;
 }
+/* 
+#start {
+  background: linear-gradient(135deg, #50ff67, #b0b0b0);
+} */
+
 .btn:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, .7);
   transform: scale(1.05);
   transition: transform .2s ease-in-out;
+  cursor: pointer;
 }
 
 .btn:active {
@@ -147,3 +220,49 @@ pre {
   background: linear-gradient(135deg, #6e8efb, #a777e3);
 
 }
+
+
+
+@media only screen and (max-width: 800px){
+	#timer {
+    font-size: 2.3rem
+  }
+
+  #timer > span {
+    display: none;
+  }
+}
+
+
+
+
+
+
+/* overlay */
+/* div {
+  position:fixed ;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  img{
+    width: 100%;
+    display: inline-block;
+    filter: blur(70px);
+    -webkit-filter: blur(70px);
+  }
+  h1{
+    color: white;
+    font-size: 75pt;
+    text-transform: uppercase;
+    position: absolute;
+    top: 275px;
+    left: 14%;
+  }
+  h2{
+    color: white;
+    font-size: 35pt;
+    position: absolute;
+    top: 425px;
+    left: 14%;
+  }
+} */
