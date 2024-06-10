@@ -10,9 +10,10 @@ const resetbtn = document.querySelector('#reset');
 const timer = document.getElementById('timer');
 const wpm = document.querySelector('.WPM');
 const accuracy = document.querySelector('.acc');
-const description = document.getElementById('description');
+const description = document.querySelector('#description');
 const desContent = document.getElementById('des-content');
 const codeBtn = document.getElementById('icon');
+const codeDisplay = document.querySelector('#code-display > pre');
 let interval;
 let sec = 0;
 let wordlength;
@@ -41,9 +42,9 @@ nextBtn.addEventListener('click', () => {
   renderNewQuote();
   startBtn.addEventListener('click', startTimer);
   sec = 0;
-  timer.innerText = sec.toString();
-  accuracy.innerText = '';
-  wpm.innerText = '';
+  timer.textContent = '00:' + sec.toString() + '0';
+  accuracy.textContent = '';
+  wpm.textContent = '';
   textarea.disabled = true;
   idx = 0;
   incorrect = 0;
@@ -57,9 +58,9 @@ resetbtn.addEventListener('click', () => {
   // renderNewQuote()
   startBtn.addEventListener('click', startTimer);
   sec = 0;
-  timer.innerText = '00:' + sec.toString();
-  accuracy.innerText = '';
-  wpm.innerText = '';
+  timer.textContent = '00:' + sec.toString() + '0';
+  accuracy.textContent = '';
+  wpm.textContent = '';
   textarea.value = '';
   textarea.disabled = true;
   idx = 0;
@@ -78,7 +79,7 @@ function startTimer() {
 
   interval = setInterval(() => {
     sec++;
-    timer.innerText =
+    timer.textContent =
       '00:' + (sec < 10 ? `0${sec.toString()}` : sec.toString());
   }, 1000);
   startBtn.removeEventListener('click', startTimer);
@@ -110,6 +111,7 @@ async function getRandomQuote() {
 async function renderNewQuote() {
   const snippet = await getRandomQuote();
   desContent.textContent = snippetState.description;
+  codeDisplay.textContent = snippetState.snippet;
   const quote = snippet;
   ogStr = quote;
   s = ogStr;
@@ -118,11 +120,11 @@ async function renderNewQuote() {
   s = s.replace(/\n /, '\n');
   wordlength = s.split(' ').length;
 
-  quoteDisplayElement.innerText = '';
-  placeholderDiv.setAttribute('data-placeholder', quote);
+  quoteDisplayElement.textContent = '';
+  // placeholderDiv.setAttribute('data-placeholder', quote);
   quote.split('').forEach((char) => {
     const characterSpan = document.createElement('span');
-    characterSpan.innerText = char;
+    characterSpan.textContent = char;
 
     characterSpan.classList.add('char');
     quoteDisplayElement.appendChild(characterSpan);
@@ -175,17 +177,22 @@ quoteInputElement.addEventListener('input', (evt) => {
     tracker[idx] = evt.target.value[idx];
     // join our object values into a string
     textValue = Object.values(tracker).join('');
+    console.log(tracker);
     // check if the tracker's char under the idx value is equal to the provided snippets same idx char
-    if (tracker[idx] === spans[idx].innerText) {
+    if (tracker[idx] === ogStr[idx]) {
       // if correct, add the correct class to the span to display the user input is correct
       spans[idx].classList.add('correct');
+
+      // spans[idx].style.visibility = 'visible';
+      spans[idx].textContent = tracker[idx];
 
       // check for a the correct value after an incorrect char is type, if they backspace to try to fix the error it will check everytime to see of the value is correct so it can reset the placeholder
       if (
         tracker[idx] === ogStr[idx] &&
         textValue === ogStr.slice(0, idx + 1)
       ) {
-        placeholderDiv.setAttribute('data-placeholder', ogStr);
+        // placeholderDiv.setAttribute('data-placeholder', ogStr);
+        // spans[idx].style.visibility = 'visible';
       }
     } else {
       // add to the incorrect counter
@@ -194,7 +201,9 @@ quoteInputElement.addEventListener('input', (evt) => {
       spans[idx].classList.add('incorrect');
       //compare the values, if they are not equal, remove the placeholder
       if (tracker[idx] !== ogStr[idx]) {
-        placeholderDiv.setAttribute('data-placeholder', '');
+        // placeholderDiv.setAttribute('data-placeholder', '');
+        // spans[idx].style.visibility = 'hidden';
+        spans[idx].textContent = ogStr[idx];
       }
     }
     //increament the idx
@@ -210,9 +219,9 @@ quoteInputElement.addEventListener('input', (evt) => {
       // Disable the textarea
       textarea.disabled = true;
       // Set calculations above to the dom
-      // wpm.innerText = wpmCalc;
+      // wpm.textContent = wpmCalc;
       wpm.textContent = 'N/A';
-      accuracy.innerText = acc;
+      accuracy.textContent = acc;
       gameComplete = true;
 
       if (evt.target.value === ogStr) {
@@ -296,21 +305,29 @@ textarea.addEventListener('keydown', (e) => {
 
 textarea.addEventListener('keyup', (e) => {
   if (e.key === 'Backspace') {
-    const currentValue = Object.values(tracker).join('');
-    const val = currentValue.slice(0, currentValue.length);
-    const og = ogStr.slice(0, idx);
+    // const currentValue = Object.values(tracker).join('');
+    // const val = currentValue.slice(0, currentValue.length);
+    // const og = ogStr.slice(0, idx);
 
-    if (val === og) {
-      placeholderDiv.setAttribute('data-placeholder', ogStr);
-    }
+    // spans[idx].style.visibility = 'visible';
+    spans[idx].textContent = ogStr[idx];
+    // if (val === og) {
+    //   // placeholderDiv.setAttribute('data-placeholder', ogStr);
+
+    // }
   }
 });
+
+const blur = document.getElementById('blur');
 
 codeBtn.addEventListener('click', () => {
   const display = description.style.display;
   if (display === 'block') {
+    blur.style.display = 'none';
     description.style.display = 'none';
   } else {
+    blur.style.display = 'flex';
+    // document.body.style.filter = 'blur(20px)';
     description.style.display = 'block';
   }
 });

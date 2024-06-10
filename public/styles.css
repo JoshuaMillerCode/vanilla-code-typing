@@ -11,6 +11,7 @@ body {
   margin: 0;
   background-color: lavender;
   font-family: 'Courier New', Courier, monospace;
+  /* z-index: 1; */
 }
 /* 
 body,
@@ -27,6 +28,8 @@ pre,
   height: 82vh;
   /* max-width: 90%; */
   display:flex;
+  justify-content: center;
+  /* align-items: center; */
   position: relative;
 }
 
@@ -35,13 +38,13 @@ pre,
   position: absolute;
   right: 20px;
   bottom: 20px;
+  z-index: 10000;
 }
 
 #icon:hover {
   cursor: pointer;
   transform: scale(1.2);
   transition: .2s linear transform;
-  z-index: 10000;
 }
 
 /* icon styling */
@@ -72,25 +75,34 @@ pre,
   user-select: none;
   overflow: auto;
   height: 95%;
-  width: 100%;
+  width: 50%;
+  font-weight: bold;
 }
 
 .quote-input {
+  margin-bottom: 1rem;
+  margin-left: calc(1rem + 2px);
+  margin-right: calc(1rem + 2px);
   background-color: transparent;
   outline: none;
-  border: none;
-  width: 100%;
-  height: 70vh;
+  border: 3px solid #202124;
+  width: 50%;
+  height: 78vh;
   /* margin-left: -15px; */
   /* margin-right: 15%; */
   resize: none;
-  padding: 0.45rem 1.05rem;
+  padding: 0.79rem .48rem;
   font-size: .82rem;
   border-radius: 0.5rem;
   position: absolute;
   cursor: text;
-  left: 0;
+  margin: 0 auto;
+  color: rgba(0, 0, 0, 0);
+  caret-color: black
 
+  /* top: 5% */
+  /* top: 2.5%;
+  left: 14.59%; */
 }
 
 .quote-input:focus {
@@ -105,6 +117,27 @@ pre,
   }
 }
 
+/* textarea.numbered {
+  background: url(http://i.imgur.com/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 10px;
+  border-color:#ccc;
+} */
+
+#blur {
+  position: absolute;
+  display: none;
+  width: 100vw;
+  height: 105vh;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(255, 247, 187, 0.7);
+  backdrop-filter: blur(7px);
+  z-index: 100;
+}
+
 #description{
   background-color: #202124;
   color: #f2ed98;
@@ -112,15 +145,35 @@ pre,
   width: 48%;
   height: 70vh;
   margin-right: 1%;
-  resize: none;
+  /* resize: none; */
   padding: 0.45rem 1.05rem;
   font-size: .82rem;
   border-radius: 0.5rem;
-  position: absolute;
+  /* position: absolute; */
   cursor: text;
-  right: 0; 
+  /* right: 0;  */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  z-index: 100000;
 }
+
+#code-display {
+  background-color: transparent;
+  width: 48%;
+  height: 70vh;
+  padding: 0.45rem 1.05rem;
+  font-size: .82rem;
+  border-radius: 0.5rem;
+  cursor: text;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  z-index: 100000;
+  color: #202124;
+  border: 2px solid #202124;
+
+}
+
+/* .description.display {
+  background-color: ;
+} */
 
 #des-content {
   border: 1px solid #f2ed98;
@@ -228,6 +281,8 @@ pre {
   background: linear-gradient(135deg, #6e8efb, #a777e3);
 
 }
+
+
 
 
 

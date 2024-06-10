@@ -43,19 +43,21 @@
       <i id="icon" class="fa-solid fa-code fa-2x"></i>
       <!-- </button> -->
       <pre class="quote-display" id="quoteDisplay"></pre>
-      <pre
+      <!-- <pre
         class="placeholder"
         spellcheck="false"
         id="placeholder"
         data-placeholder=""
-      >
-        <textarea  disabled id="quoteInput" cols="30" rows="30" class="quote-input"></textarea>
-      </pre>
-      <div id="description">
-        <h1>Code Explaination:</h1>
-        <div id="des-content"></div>
-        <!-- <textarea  disabled id="quoteInput" cols="30" rows="90" class="quote-input"></textarea> -->
-      </div>
+      > -->
+      <textarea
+        spellcheck="false"
+        disabled
+        id="quoteInput"
+        cols="30"
+        rows="30"
+        class="quote-input numbered"
+      ></textarea>
+      <!-- </pre> -->
     </div>
     <!-- <div id="overlay">
       <img
@@ -64,5 +66,18 @@
       Welcome to Vanilla Typer
       <br />
     </div> -->
+
+    <div id="blur">
+      <div id="description">
+        <h1>Code Explaination</h1>
+        <div id="des-content"></div>
+        <!-- <textarea  disabled id="quoteInput" cols="30" rows="90" class="quote-input"></textarea> -->
+      </div>
+      <div id="code-display">
+        <h1>Code</h1>
+        <pre></pre>
+        <!-- <textarea  disabled id="quoteInput" cols="30" rows="90" class="quote-input"></textarea> -->
+      </div>
+    </div>
   </body>
 </html>
